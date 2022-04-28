@@ -16,11 +16,12 @@ npm install
 
 ### 调用
 ```javascript
-    const dragAndDrop = require('./human-drag').dragAndDrop;
-    const browser = await require('playwright').firefox.launch({ headless: false });
-    const page = await browser.newPage();
-    await page.goto('somesite');
-    await dragAndDrop(page, {x: 100, y: 50 }, {x: 400, y: 100 });
+
+const dragAndDrop = require('./human-drag').dragAndDrop;
+const browser = await require('playwright').firefox.launch({ headless: false });
+const page = await browser.newPage();
+await page.goto('somesite');
+await dragAndDrop(page, {x: 100, y: 50 }, {x: 400, y: 100 });
 
 ```
 
