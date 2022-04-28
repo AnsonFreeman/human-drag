@@ -1,0 +1,23 @@
+{
+  "name": "human-drag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "human-drag.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnsonFreeman/human-drag.git"
+  },
+  "author": "Anson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnsonFreeman/human-drag/issues"
+  },
+  "homepage": "https://github.com/AnsonFreeman/human-drag#readme",
+  "dependencies": {
+    "playwright": "^1.21.1",
+    "playwright-addons": "github:Niek/playwright-addons#master"
+  }
+}
