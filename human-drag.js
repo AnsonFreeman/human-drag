@@ -1,9 +1,10 @@
 /**
  * @param page
- * @param {x:number,y:number} from 
- * @param {x:number,y:number} dest 
+ * @param { x:number, y:number } from 
+ * @param { x:number, y:number } dest 
+ * @param { speed: int} options 
  */
-async function dragAndDrop(page, from, dest) {
+async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
     //move to target
     await page.mouse.move(
         from.x,
@@ -12,7 +13,7 @@ async function dragAndDrop(page, from, dest) {
     )
     let width = dest.x - from.x;
     let height = dest.y - from.y;
-    let baseV = Math.round(Math.random() * 600);
+    let baseV = Math.round(Math.random() * options.speed * 100);
     // let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
 
     await page.mouse.down()
@@ -46,4 +47,4 @@ async function dragAndDrop(page, from, dest) {
     await page.mouse.up();
 }
 
-module.exports = {dragAndDrop};
+module.exports = { dragAndDrop };
