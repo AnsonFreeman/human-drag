@@ -21,8 +21,8 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
 
     //first 2/3 of the way
     await page.mouse.move(
-        from.x + Math.round(Math.random() * width * 2 / 3),
-        from.y + Math.round(Math.random() * height * 2 / 3),
+        from.x + Math.round(Math.random() * width / 2),
+        from.y + Math.round(Math.random() * height / 2),
         { steps: Math.round(Math.random() * 5) + baseV }
     );
 

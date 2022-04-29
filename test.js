@@ -38,7 +38,8 @@
                 {
                     x: from.x + width + Math.round(Math.random() * 10),
                     y: from.y + yDirection * Math.round(Math.random() * 10)
-                });
+                },
+                { speed: Math.round(Math.random() * 4) + 2 });
 
         } catch (error) {
             console.debug(error);
