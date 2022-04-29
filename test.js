@@ -28,7 +28,7 @@
     const page = await browser.newPage();
     await page.goto('http://anson.top/awsc/ali.html');
 
-    await page.waitForTimeout(9000000);
+    // await page.waitForTimeout(9000000);
     while (page?.url()) {
         try {
             let visible = false;
