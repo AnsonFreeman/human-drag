@@ -1,15 +1,35 @@
 (async () => {
-    const dragAndDrop = require('./human-drag').dragAndDrop;
-    const browser = await require('playwright').firefox.launch({ headless: false }); // or: chrome, firefox, webkit
+    const { firefox, chromium, webkit, chrome, devices } = require('playwright');
+
+    const slideAndDrop = require('./human-drag').slideAndDrop;
+    const browser = await firefox.launch({ headless: false }); // or: chromium, firefox, webkit
     const addons = await import('playwright-addons');
-    const page = await browser.newPage();
+    await addons.stealth(browser);
+    //设置设备
+    // const device = devices['iPhone 6'];
+    const context = await browser.newContext({
+        // ...device,
+        //语言
+        locale: 'de-DE',
+        // //时区
+        timezoneId: 'America/Adak',
+        // //经纬度
+        longitude: 29.979097,
+        latitude: 31.134256,
+        // colorScheme: 'dark',
+        // //设置useragent
+        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57 MicroMessenger/7.0.3(0x17000321) NetType/WIFI Language/zh_CN',
+        // //屏幕大小
+        viewport: { width: 1024, height: 768 },
+        hasTouch: true,
+    });
 
     // await addons.adblocker(browser);
-    await addons.stealth(browser);
+    const page = await browser.newPage();
     await page.goto('http://anson.top/awsc/ali.html');
 
-
-    while (page?.url) {
+    await page.waitForTimeout(9000000);
+    while (page?.url()) {
         try {
             let visible = false;
             do {
@@ -18,7 +38,7 @@
             } while (!visible)
             await page.waitForTimeout(1000);
 
-            const btnPosition = await btn.boundingBox();
+            const btnPosition = await btn.boundingBox()
 
             if (!btnPosition) {
                 continue;
@@ -32,14 +52,14 @@
                 x: btnPosition.x + btnPosition.width / 2 + Math.round(Math.random() * 5) - 2,
                 y: btnPosition.y + btnPosition.height / 2 + Math.round(Math.random() * 5) - 2
             };
-            await dragAndDrop(
+            await slideAndDrop(
                 page,
                 from,
                 {
                     x: from.x + width + Math.round(Math.random() * 10),
                     y: from.y + yDirection * Math.round(Math.random() * 10)
                 },
-                { speed: Math.round(Math.random() * 4) + 2 });
+                { speed: 4 });
 
         } catch (error) {
             console.debug(error);

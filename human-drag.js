@@ -19,11 +19,11 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
     await page.mouse.down()
     await page.waitForTimeout(Math.round(Math.random() * 200));
 
-    //first 2/3 of the way
+    //first 1/2 of the way
     await page.mouse.move(
         from.x + Math.round(Math.random() * width / 2),
         from.y + Math.round(Math.random() * height / 2),
-        { steps: Math.round(Math.random() * 5) + baseV }
+        { steps: Math.round(Math.random() * 10) + baseV }
     );
 
     if (Math.round(Math.random() * 10) > 5 ? -1 : 1) {
@@ -31,7 +31,7 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
         await page.mouse.move(
             from.x + Math.round(width / 2) + Math.round(Math.random() * width * 2 / 3),
             from.y + Math.round(height / 2) + Math.round(Math.random() * height * 2 / 3),
-            { steps: Math.round(Math.random() * 5) + baseV }
+            { steps: Math.round(Math.random() * 10) + baseV }
         );
     };
 
@@ -39,7 +39,7 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
     await page.mouse.move(
         from.x + width + Math.round(Math.random() * 3),
         from.y + height + Math.round(Math.random() * 3),
-        { steps: Math.round(Math.random() * 5) + baseV }
+        { steps: Math.round(Math.random() * 10) + baseV }
     );
 
     //drop
@@ -47,4 +47,48 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
     await page.mouse.up();
 }
 
-module.exports = { dragAndDrop };
+async function slideAndDrop(page, from, dest, options = { speed: 5 }) {
+    //move to target
+    await page.mouse.move(
+        from.x,
+        from.y,
+        { steps: Math.round(Math.random() * 10) + 5 }
+    )
+    let width = dest.x - from.x;
+    let baseV = Math.round(Math.random() * options.speed * 100);
+    // let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
+
+    await page.mouse.down()
+    await page.waitForTimeout(Math.round(Math.random() * 200));
+
+    let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
+    let toY = from.y + yDirection * Math.round(Math.random() * 3);
+    //first 1/2 of the way
+    await page.mouse.move(
+        from.x + Math.round(Math.random() * width / 2),
+        toY,
+        { steps: Math.round(Math.random() * 20) + baseV }
+    );
+
+    if (Math.round(Math.random() * 10) > 5 ? -1 : 1) {
+        //first 2/3 of the way
+        await page.mouse.move(
+            from.x + Math.round(width / 2) + Math.round(Math.random() * width * 2 / 3),
+            toY = toY + yDirection * Math.round(Math.random() * 3),
+            { steps: Math.round(Math.random() * 20) + baseV }
+        );
+    };
+
+    //rest of the way
+    await page.mouse.move(
+        from.x + width + Math.round(Math.random() * 3),
+        toY + yDirection * Math.round(Math.random() * 3),
+        { steps: Math.round(Math.random() * 10) + baseV }
+    );
+
+    //drop
+    await page.waitForTimeout(Math.round(Math.random() * 600));
+    await page.mouse.up();
+}
+
+module.exports = { dragAndDrop, slideAndDrop };
