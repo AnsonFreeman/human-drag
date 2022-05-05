@@ -62,28 +62,32 @@ async function slideAndDrop(page, from, dest, options = { speed: 5 }) {
     await page.waitForTimeout(Math.round(Math.random() * 200));
 
     let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
-    let toY = from.y + yDirection * Math.round(Math.random() * 3);
+    let toX = from.x;
+    let toY = from.y;
     //first 1/2 of the way
     await page.mouse.move(
-        from.x + Math.round(Math.random() * width / 2),
-        toY,
+        toX = toX + Math.round(Math.random() * width / 2),
+        toY = toY + yDirection * Math.round(Math.random() * 10),
         { steps: Math.round(Math.random() * 20) + baseV }
     );
 
-    if (Math.round(Math.random() * 10) > 5 ? -1 : 1) {
-        //first 2/3 of the way
-        await page.mouse.move(
-            from.x + Math.round(width / 2) + Math.round(Math.random() * width * 2 / 3),
-            toY = toY + yDirection * Math.round(Math.random() * 3),
-            { steps: Math.round(Math.random() * 20) + baseV }
-        );
-    };
+    for (let index = 0; index < 5; index++) {
+        if (Math.round(Math.random() * 10) > 5 ? -1 : 1) {
+            //first 2/3 of the way
+            await page.mouse.move(
+                toX = toX + Math.round(Math.random() * 50),
+                toY = toY + yDirection * Math.round(Math.random() * 10),
+                { steps: Math.round(Math.random() * 20) + baseV }
+            );
+        };
+    }
+
 
     //rest of the way
     await page.mouse.move(
         from.x + width + Math.round(Math.random() * 3),
-        toY + yDirection * Math.round(Math.random() * 3),
-        { steps: Math.round(Math.random() * 10) + baseV }
+        toY + yDirection * Math.round(Math.random() * 10),
+        { steps: Math.round(Math.random() * 20) + baseV }
     );
 
     //drop

@@ -57,9 +57,9 @@
                 from,
                 {
                     x: from.x + width + Math.round(Math.random() * 10),
-                    y: from.y + yDirection * Math.round(Math.random() * 10)
+                    y: from.y + yDirection * Math.round(Math.random() * 50)
                 },
-                { speed: 4 });
+                { speed: 6 });
 
         } catch (error) {
             console.debug(error);
