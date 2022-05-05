@@ -46,20 +46,18 @@
             const width = await (await page.locator('#nc_1__scale_text').boundingBox()).width;
 
             // console.debug({btn:btn, x: btn.x, y: btn.y });
-            let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
+            // let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
 
             let from = {
                 x: btnPosition.x + btnPosition.width / 2 + Math.round(Math.random() * 5) - 2,
                 y: btnPosition.y + btnPosition.height / 2 + Math.round(Math.random() * 5) - 2
             };
-            await slideAndDrop(
-                page,
-                from,
-                {
-                    x: from.x + width + Math.round(Math.random() * 10),
-                    y: from.y + yDirection * Math.round(Math.random() * 50)
-                },
-                { speed: 6 });
+
+            let to = {
+                x: from.x + width + Math.round(Math.random() * 10),
+                y: from.y,
+            };
+            await slideAndDrop(page, from, to);
 
         } catch (error) {
             console.debug(error);

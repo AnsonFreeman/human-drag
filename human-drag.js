@@ -47,7 +47,7 @@ async function dragAndDrop(page, from, dest, options = { speed: 5 }) {
     await page.mouse.up();
 }
 
-async function slideAndDrop(page, from, dest, options = { speed: 5 }) {
+async function slideAndDrop(page, from, dest) {
     //move to target
     await page.mouse.move(
         from.x,
@@ -55,7 +55,7 @@ async function slideAndDrop(page, from, dest, options = { speed: 5 }) {
         { steps: Math.round(Math.random() * 10) + 5 }
     )
     let width = dest.x - from.x;
-    let baseV = Math.round(Math.random() * options.speed * 100);
+    let baseV = Math.round(Math.random() * 300);
     // let yDirection = Math.round(Math.random() * 10) > 4 ? -1 : 1;
 
     await page.mouse.down()
