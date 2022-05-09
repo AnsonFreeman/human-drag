@@ -1,7 +1,7 @@
 (async () => {
     const { firefox, chromium, webkit, chrome, devices } = require('playwright');
 
-    const slideAndDrop = require('./human-drag').slideAndDrop;
+    const { slideAndDrop, slideAndDropV1 } = require('./human-drag');
     const browser = await firefox.launch({ headless: false }); // or: chromium, firefox, webkit
     const addons = await import('playwright-addons');
     await addons.stealth(browser);
@@ -57,7 +57,12 @@
                 x: from.x + width + Math.round(Math.random() * 10),
                 y: from.y,
             };
-            await slideAndDrop(page, from, to);
+
+            if (Math.random() * 10 > 4) {
+                await slideAndDrop(page, from, to);
+            } else {
+                await slideAndDropV1(page, from, to);
+            }
 
         } catch (error) {
             console.debug(error);
