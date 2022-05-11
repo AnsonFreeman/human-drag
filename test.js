@@ -5,9 +5,6 @@
     const browser = await firefox.launch({
         headless: false,
         // devtools: true,
-        proxy: {
-            server: 'socks5://39.105.130.90:20080',
-        },
         firefoxUserPrefs: {
             'devtools.responsive.reloadConditions.touchSimulation': true
         }
@@ -34,10 +31,9 @@
     });
 
     // await addons.stealth(context);
-    await addons.stealth(context);
 
-    // await addons.adblocker(browser);
-    const page = await context.newPage();
+    await addons.adblocker(browser);
+    const page = await browser.newPage();
     await page.goto('http://anson.top/awsc/ali.html');
 
     // await page.waitForTimeout(9000000);
