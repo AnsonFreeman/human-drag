@@ -5,34 +5,33 @@
     const browser = await firefox.launch({
         headless: false,
         // devtools: true,
-        firefoxUserPrefs: {
-            'devtools.responsive.reloadConditions.touchSimulation': true
-        }
+        // firefoxUserPrefs: {
+        //     'devtools.responsive.reloadConditions.touchSimulation': true
+        // }
     }); // or: chromium, firefox, webkit
     const addons = await import('playwright-addons');
     //设置设备
     // const device = devices['iPhone 6'];
-    const context = await browser.newContext({
-        // ...device,
-        //语言
-        // locale: 'de-DE',
-        // //时区
-        // timezoneId: 'America/Adak',
-        // //经纬度
-        // longitude: 29.979097,
-        // latitude: 31.134256,
-        // colorScheme: 'dark',
-        // //设置useragent
-        // userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57 MicroMessenger/7.0.3(0x17000321) NetType/WIFI Language/zh_CN',
-        // //屏幕大小
-        // viewport: { width: 2024, height: 1768 },
-        hasTouch: true,
-        // isMobile: true,
-    });
+    // const context = await browser.newContext({
+    //     // ...device,
+    //     //语言
+    //     // locale: 'de-DE',
+    //     // //时区
+    //     // timezoneId: 'America/Adak',
+    //     // //经纬度
+    //     // longitude: 29.979097,
+    //     // latitude: 31.134256,
+    //     // colorScheme: 'dark',
+    //     // //设置useragent
+    //     // userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57 MicroMessenger/7.0.3(0x17000321) NetType/WIFI Language/zh_CN',
+    //     // //屏幕大小
+    //     // viewport: { width: 2024, height: 1768 },
+    //     hasTouch: true,
+    //     // isMobile: true,
+    // });
 
-    // await addons.stealth(context);
-
-    await addons.adblocker(browser);
+    await addons.stealth(browser);
+    // await addons.adblocker(browser);
     const page = await browser.newPage();
     await page.goto('http://anson.top/awsc/ali.html');
 
