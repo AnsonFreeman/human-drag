@@ -1,35 +1,48 @@
 (async () => {
     const { firefox, chromium, webkit, chrome, devices } = require('playwright');
 
-    const { slideAndDrop, slideAndDropV1 } = require('./human-drag');
-    const browser = await firefox.launch({ headless: false }); // or: chromium, firefox, webkit
+    const { slideAndDrop, slideAndDropV1, slideAndDropRand } = require('./human-drag');
+    const browser = await firefox.launch({
+        headless: false,
+        // devtools: true,
+        proxy: {
+            server: 'socks5://39.105.130.90:20080',
+        },
+        firefoxUserPrefs: {
+            'devtools.responsive.reloadConditions.touchSimulation': true
+        }
+    }); // or: chromium, firefox, webkit
     const addons = await import('playwright-addons');
-    await addons.stealth(browser);
     //设置设备
     // const device = devices['iPhone 6'];
     const context = await browser.newContext({
         // ...device,
         //语言
-        locale: 'de-DE',
+        // locale: 'de-DE',
         // //时区
-        timezoneId: 'America/Adak',
+        // timezoneId: 'America/Adak',
         // //经纬度
-        longitude: 29.979097,
-        latitude: 31.134256,
+        // longitude: 29.979097,
+        // latitude: 31.134256,
         // colorScheme: 'dark',
         // //设置useragent
-        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57 MicroMessenger/7.0.3(0x17000321) NetType/WIFI Language/zh_CN',
+        // userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57 MicroMessenger/7.0.3(0x17000321) NetType/WIFI Language/zh_CN',
         // //屏幕大小
-        viewport: { width: 1024, height: 768 },
+        // viewport: { width: 2024, height: 1768 },
         hasTouch: true,
+        // isMobile: true,
     });
 
+    // await addons.stealth(context);
+    await addons.stealth(context);
+
     // await addons.adblocker(browser);
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.goto('http://anson.top/awsc/ali.html');
 
     // await page.waitForTimeout(9000000);
-    while (page?.url()) {
+    let max = 30;
+    while (page?.url() && max-- > 0) {
         try {
             let visible = false;
             do {
@@ -58,11 +71,11 @@
                 y: from.y,
             };
 
-            if (Math.random() * 10 > 4) {
-                await slideAndDrop(page, from, to);
-            } else {
-                await slideAndDropV1(page, from, to);
-            }
+            // if (Math.random() * 10 > 4) {
+            await slideAndDrop(page, from, to);
+            // } else {
+            // await slideAndDropV1(page, from, to);
+            // }
 
         } catch (error) {
             console.debug(error);
@@ -70,4 +83,5 @@
     }
     console.debug('end');
 
+    process.exit();
 })();
